@@ -277,11 +277,16 @@ public final class JsonUtils {
     return Json.createPatch(treeToValue(JsonDiff.asJson(source, dest), JsonArray.class));
   }
 
-  public static JsonValue readJson(String s) {
-    try (JsonReader reader = Json.createReader(new StringReader(s))) {
-      return reader.readValue();
-    }
+//  public static JsonValue readJson(String s) {
+//    try (JsonReader reader = Json.createReader(new StringReader(s))) {
+//      return reader.readValue();
+//    }
+//  }
+public static JsonValue readJson(String s) {
+  try (JsonReader reader = Json.createReader(new StringReader(s))) {
+    return reader.readObject();
   }
+}
 
   public static JsonSchema getJsonSchema(String schema) {
     return schemaFactory.getSchema(schema);

@@ -70,6 +70,45 @@ const App: FC = () => {
     }
   }, [applicationConfig]);
 
+  // Inject the chatbot script and styles
+  useEffect(() => {
+    // Chatbot configuration script
+    const scriptConfig = document.createElement('script');
+    scriptConfig.innerHTML = `
+      window.difyChatbotConfig = {
+        token: '04fIIjsnvPb5nfGP'
+      };
+    `;
+    document.body.appendChild(scriptConfig);
+
+    // Chatbot main script
+    const chatbotScript = document.createElement('script');
+    chatbotScript.src = 'https://udify.app/embed.min.js';
+    chatbotScript.defer = true;
+    chatbotScript.id = '04fIIjsnvPb5nfGP';
+    document.body.appendChild(chatbotScript);
+
+    // Chatbot styles
+    const style = document.createElement('style');
+    style.innerHTML = `
+      #dify-chatbot-bubble-button {
+        background-color: #1C64F2 !important;
+      }
+      #dify-chatbot-bubble-window {
+        width: 24rem !important;
+        height: 40rem !important;
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Cleanup on unmount
+    return () => {
+      document.body.removeChild(scriptConfig);
+      document.body.removeChild(chatbotScript);
+      document.head.removeChild(style);
+    };
+  }, []);
+
   return (
     <div className="main-container">
       <div className="content-wrapper" data-testid="content-wrapper">
